@@ -45,33 +45,29 @@ export const useQueueAnnouncer = (currentQueue: QueueTicket | null) => {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel(); // Stop any current speech
 
-        // Format queue number for natural reading
-        // "0012" -> "12", "P0012" -> "P 12", "AB005" -> "A B 5"
-        let pronouncedQueueNumber = queue.queue_number.replace(/\d+/g, (match) => parseInt(match, 10).toString());
-        // Add spaces between letters and numbers
-        pronouncedQueueNumber = pronouncedQueueNumber.replace(/([a-zA-Z])(\d)/g, '$1 $2');
-        // Space out consecutive letters so they are spelled out
-        pronouncedQueueNumber = pronouncedQueueNumber.replace(/([a-zA-Z])(?=[a-zA-Z])/g, '$1 ');
-        
-        const text = `Antrian nomor, ${pronouncedQueueNumber}. Atas nama, ${queue.patient}. Silakan menuju ke, Loket Registrasi.`;
-        
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'id-ID';
-        utterance.rate = 0.85; // Slightly slower for clarity
-        utterance.pitch = 1.0;
-        utterance.volume = 1.0; // Max volume
+        const doSpeak = () => {
+          let pronouncedQueueNumber = queue.queue_number;
+          pronouncedQueueNumber = pronouncedQueueNumber.replace(/\d+/g, (match) => parseInt(match, 10).toString());
+          pronouncedQueueNumber = pronouncedQueueNumber.replace(/([a-zA-Z])(\d)/g, '$1 $2');
+          pronouncedQueueNumber = pronouncedQueueNumber.replace(/([a-zA-Z])(?=[a-zA-Z])/g, '$1 ');
+          
+          const text = `Antrian nomor, ${pronouncedQueueNumber}. Atas nama, ${queue.patient}. Silakan menuju ke, Loket Registrasi.`;
+          
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'id-ID';
+          utterance.rate = 0.85; 
+          utterance.pitch = 1;
+          
+          const voices = window.speechSynthesis.getVoices();
+          const idVoice = voices.find(v => v.lang.includes('id'));
+          if (idVoice) {
+            utterance.voice = idVoice;
+          }
 
-        // Try to pick a female Indonesian voice if available
-        const voices = window.speechSynthesis.getVoices();
-        const femaleVoice = voices.find(v => 
-          v.lang.includes('id') && (v.name.toLowerCase().includes('female') || v.name.includes('Gadis') || v.name.includes('Google'))
-        ) || voices.find(v => v.lang.includes('id'));
-        
-        if (femaleVoice) {
-          utterance.voice = femaleVoice;
-        }
-        
-        window.speechSynthesis.speak(utterance);
+          window.speechSynthesis.speak(utterance);
+        };
+
+          doSpeak();
       }
     } catch (err) {
       console.error('Audio announcement failed:', err);

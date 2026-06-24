@@ -10,7 +10,7 @@ export interface QueueTableData {
 }
 
 interface QueueTableProps {
-  theme: Extract<QueueCardTheme, 'green' | 'teal'>; // Currently only green or teal
+  theme: Extract<QueueCardTheme, 'green' | 'teal' | 'blue'>; // Currently only green, teal, blue
   title: string;
   queues: QueueTableData[];
 }
@@ -33,6 +33,15 @@ const themeStyles = {
     thBg: 'bg-teal-700',
     rowHover: 'hover:bg-teal-50/50',
     queueText: 'text-teal-700',
+  },
+  blue: {
+    border: 'border-blue-100',
+    iconBg: 'bg-blue-100',
+    iconText: 'text-blue-700',
+    headerText: 'text-blue-800',
+    thBg: 'bg-blue-700',
+    rowHover: 'hover:bg-blue-50/50',
+    queueText: 'text-blue-700',
   },
 };
 

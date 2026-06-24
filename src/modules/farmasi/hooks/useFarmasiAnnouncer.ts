@@ -1,9 +1,36 @@
 import { useEffect, useRef, useState } from 'react';
-import { PoliGigiQueueTicket } from '../types';
+import { FarmasiQueueTicket } from '../types';
 
-export const usePoliGigiAnnouncer = (currentQueue: PoliGigiQueueTicket | null) => {
+export const useFarmasiAnnouncer = (currentQueue: FarmasiQueueTicket | null) => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const lastAnnouncedName = useRef<string | null>(null);
+
+  const toggleSound = () => {
+    setIsSoundEnabled((prev) => {
+      const willBeEnabled = !prev;
+      
+      // Browser hack to "unlock" audio features on user click
+      if (willBeEnabled) {
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        if (AudioContextClass) {
+          const ctx = new AudioContextClass();
+          ctx.resume();
+        }
+        if ('speechSynthesis' in window) {
+          const u = new SpeechSynthesisUtterance('');
+          u.volume = 0;
+          window.speechSynthesis.speak(u);
+        }
+        
+        // If turning on, we might want to announce the current one immediately if it hasn't been announced
+        if (currentQueue && currentQueue.name !== lastAnnouncedName.current) {
+          announce(currentQueue);
+        }
+      }
+      
+      return willBeEnabled;
+    });
+  };
 
   const playChime = async () => {
     const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
@@ -36,7 +63,7 @@ export const usePoliGigiAnnouncer = (currentQueue: PoliGigiQueueTicket | null) =
     return new Promise(resolve => setTimeout(resolve, 1500));
   };
 
-  const announce = async (queue: PoliGigiQueueTicket) => {
+  const announce = async (queue: FarmasiQueueTicket) => {
     if (!isSoundEnabled) return;
     
     try {
@@ -45,17 +72,21 @@ export const usePoliGigiAnnouncer = (currentQueue: PoliGigiQueueTicket | null) =
 
         const doSpeak = () => {
           let pronouncedQueueNumber = queue.queue_number;
+          // Strip leading zeros from numbers (e.g. "0005" -> "5", "A0012" -> "A12")
           pronouncedQueueNumber = pronouncedQueueNumber.replace(/\d+/g, (match) => parseInt(match, 10).toString());
+          // Add space between letter and number (e.g. "A12" -> "A 12")
           pronouncedQueueNumber = pronouncedQueueNumber.replace(/([a-zA-Z])(\d)/g, '$1 $2');
+          // Space out consecutive letters so they are spelled out (e.g. "AB" -> "A B")
           pronouncedQueueNumber = pronouncedQueueNumber.replace(/([a-zA-Z])(?=[a-zA-Z])/g, '$1 ');
           
-          const text = `Antrian nomor, ${pronouncedQueueNumber}. Atas nama, ${queue.patient_name}. Silakan menuju ke, ${queue.clinic_room}.`;
+          const text = `Antrian nomor, ${pronouncedQueueNumber}. Atas nama, ${queue.patient_name}. Silakan menuju ke, ${queue.handed_counter || 'Loket Farmasi'}.`;
           
           const utterance = new SpeechSynthesisUtterance(text);
           utterance.lang = 'id-ID';
-          utterance.rate = 0.85;
+          utterance.rate = 0.85; // Slightly slower for clarity
           utterance.pitch = 1;
           
+          // Find Indonesian voice if available
           const voices = window.speechSynthesis.getVoices();
           const idVoice = voices.find(v => v.lang.includes('id'));
           if (idVoice) {
@@ -65,41 +96,28 @@ export const usePoliGigiAnnouncer = (currentQueue: PoliGigiQueueTicket | null) =
           window.speechSynthesis.speak(utterance);
         };
 
-          doSpeak();
+        try {
+          await playChime();
+        } catch (e) {
+          console.error('Failed to play chime audio:', e);
+          setIsSoundEnabled(false);
+        }
+        
+        doSpeak();
       }
     } catch (err) {
       console.error('Audio announcement failed:', err);
     }
+    
+    lastAnnouncedName.current = queue.name;
   };
 
   useEffect(() => {
-    if (currentQueue && currentQueue.name !== lastAnnouncedName.current) {
-      lastAnnouncedName.current = currentQueue.name;
+    // Only announce if sound is enabled and there is a new "Dipanggil" queue that we haven't announced yet
+    if (isSoundEnabled && currentQueue && currentQueue.name !== lastAnnouncedName.current) {
       announce(currentQueue);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQueue, isSoundEnabled]);
-
-  const toggleSound = () => {
-    setIsSoundEnabled((prev) => {
-      const willBeEnabled = !prev;
-      
-      if (willBeEnabled) {
-        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-        if (AudioContextClass) {
-          const ctx = new AudioContextClass();
-          ctx.resume();
-        }
-        if ('speechSynthesis' in window) {
-          const u = new SpeechSynthesisUtterance('');
-          u.volume = 0;
-          window.speechSynthesis.speak(u);
-        }
-      }
-      
-      return willBeEnabled;
-    });
-  };
 
   return { isSoundEnabled, toggleSound };
 };

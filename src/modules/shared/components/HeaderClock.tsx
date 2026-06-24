@@ -7,7 +7,7 @@ import { Calendar } from 'lucide-react';
 import { QueueCardTheme } from './QueueCard';
 
 interface HeaderClockProps {
-  theme: Extract<QueueCardTheme, 'green' | 'teal'>;
+  theme: Extract<QueueCardTheme, 'green' | 'teal' | 'blue' | 'cyan'>;
 }
 
 const themeStyles = {
@@ -24,6 +24,20 @@ const themeStyles = {
     timeText: 'text-teal-800',
     wibBg: 'bg-teal-100',
     wibText: 'text-teal-600',
+  },
+  blue: {
+    border: 'border-blue-100',
+    iconText: 'text-blue-600',
+    timeText: 'text-blue-800',
+    wibBg: 'bg-blue-100',
+    wibText: 'text-blue-600',
+  },
+  cyan: {
+    border: 'border-cyan-100',
+    iconText: 'text-cyan-600',
+    timeText: 'text-cyan-800',
+    wibBg: 'bg-cyan-100',
+    wibText: 'text-cyan-600',
   },
 };
 

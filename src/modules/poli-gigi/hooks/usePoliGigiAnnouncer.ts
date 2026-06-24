@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { QueueTicket } from '../types';
+import { PoliGigiQueueTicket } from '../types';
 
-export const useQueueAnnouncer = (currentQueue: QueueTicket | null) => {
+export const usePoliGigiAnnouncer = (currentQueue: PoliGigiQueueTicket | null) => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const lastAnnouncedName = useRef<string | null>(null);
 
@@ -36,7 +36,7 @@ export const useQueueAnnouncer = (currentQueue: QueueTicket | null) => {
     return new Promise(resolve => setTimeout(resolve, 1500));
   };
 
-  const announce = async (queue: QueueTicket) => {
+  const announce = async (queue: PoliGigiQueueTicket) => {
     if (!isSoundEnabled) return;
     
     try {
@@ -46,14 +46,12 @@ export const useQueueAnnouncer = (currentQueue: QueueTicket | null) => {
         window.speechSynthesis.cancel(); // Stop any current speech
 
         // Format queue number for natural reading
-        // "0012" -> "12", "P0012" -> "P 12", "AB005" -> "A B 5"
         let pronouncedQueueNumber = queue.queue_number.replace(/\d+/g, (match) => parseInt(match, 10).toString());
-        // Add spaces between letters and numbers
         pronouncedQueueNumber = pronouncedQueueNumber.replace(/([a-zA-Z])(\d)/g, '$1 $2');
-        // Space out consecutive letters so they are spelled out
         pronouncedQueueNumber = pronouncedQueueNumber.replace(/([a-zA-Z])(?=[a-zA-Z])/g, '$1 ');
         
-        const text = `Antrian nomor, ${pronouncedQueueNumber}. Atas nama, ${queue.patient}. Silakan menuju ke, Loket Registrasi.`;
+        // Destinasi poli adalah Poli Gigi (atau dari data)
+        const text = `Antrian nomor, ${pronouncedQueueNumber}. Atas nama, ${queue.patient_name}. Silakan menuju ke, ${queue.clinic_room}.`;
         
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'id-ID';
@@ -79,7 +77,6 @@ export const useQueueAnnouncer = (currentQueue: QueueTicket | null) => {
   };
 
   useEffect(() => {
-    // If we have a current queue, and it's different from the last one we announced
     if (currentQueue && currentQueue.name !== lastAnnouncedName.current) {
       lastAnnouncedName.current = currentQueue.name;
       announce(currentQueue);
@@ -91,7 +88,6 @@ export const useQueueAnnouncer = (currentQueue: QueueTicket | null) => {
     setIsSoundEnabled((prev) => {
       const willBeEnabled = !prev;
       
-      // Browser hack to "unlock" audio features on user click
       if (willBeEnabled) {
         const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
         if (AudioContextClass) {

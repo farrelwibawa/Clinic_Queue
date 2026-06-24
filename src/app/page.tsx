@@ -34,15 +34,15 @@ export default function LandingPage() {
           </div>
         </Link>
 
-        {/* Card 2: Poli Gigi */}
-        <Link href="/poli-gigi" className="group">
+        {/* Card 2: Semua Poli */}
+        <Link href="/semua-poli" className="group">
           <div className="bg-white rounded-3xl p-8 shadow-md border border-teal-100 h-full flex flex-col items-center text-center transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-teal-300 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-teal-600 to-teal-400 group-hover:h-3 transition-all" />
             <div className="w-20 h-20 bg-teal-50 rounded-full flex items-center justify-center mb-6 text-teal-600 group-hover:bg-teal-100 transition-colors">
               <Stethoscope className="w-10 h-10" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Antrian Poli Gigi</h2>
-            <p className="text-gray-500">Panggilan antrian khusus ruangan poli gigi.</p>
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Antrian Semua Poli</h2>
+            <p className="text-gray-500">Panggilan antrian untuk semua ruangan poli.</p>
           </div>
         </Link>
 

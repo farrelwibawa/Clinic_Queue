@@ -50,7 +50,7 @@ export async function GET() {
     }
 
     let url = new URL(`${BASE_URL}/api/resource/Registration Queue Ticket`);
-    url.searchParams.append('fields', JSON.stringify(['name', 'queue_number', 'patient', 'destination_clinic', 'status']));
+    url.searchParams.append('fields', JSON.stringify(['name', 'queue_number', 'patient', 'destination_clinic', 'status', 'modified']));
     url.searchParams.append('limit_page_length', '0');
 
     let response = await fetch(url.toString(), {

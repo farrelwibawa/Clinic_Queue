@@ -3,7 +3,8 @@ export interface PoliGigiQueueTicket {
   queue_number: string;
   patient_name: string;
   clinic_room: string;
-  status: 'Menunggu' | 'Dipanggil' | string;
+  status: 'Menunggu' | 'Dipanggil' | 'Selesai';
+  modified: string;
 }
 
 export interface PoliGigiQueueResponse {

@@ -4,6 +4,7 @@ export interface FarmasiQueueTicket {
   patient_name: string;
   handed_counter: string;
   status: 'Menunggu' | 'Dipanggil' | 'Selesai' | string;
+  modified: string;
 }
 
 export interface FarmasiQueueResponse {

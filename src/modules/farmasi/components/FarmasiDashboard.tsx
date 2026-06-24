@@ -22,7 +22,9 @@ export const FarmasiDashboard = () => {
   const queues = state.context.queues;
 
   const { currentQueue, nextQueue, upcomingQueues } = useMemo(() => {
-    const current = queues.find((q) => q.status === 'Dipanggil') || null;
+    const current = queues
+      .filter((q) => q.status === 'Dipanggil')
+      .sort((a, b) => new Date(b.modified).getTime() - new Date(a.modified).getTime())[0] || null;
 
     const waiting = queues
       .filter((q) => q.status === 'Menunggu')

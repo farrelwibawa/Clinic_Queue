@@ -3,7 +3,7 @@ import { FarmasiQueueTicket } from '../types';
 
 export const useFarmasiAnnouncer = (currentQueue: FarmasiQueueTicket | null) => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-  const lastAnnouncedName = useRef<string | null>(null);
+  const lastAnnouncedModified = useRef<string | null>(null);
 
   const toggleSound = () => {
     setIsSoundEnabled((prev) => {
@@ -23,7 +23,7 @@ export const useFarmasiAnnouncer = (currentQueue: FarmasiQueueTicket | null) => 
         }
         
         // If turning on, we might want to announce the current one immediately if it hasn't been announced
-        if (currentQueue && currentQueue.name !== lastAnnouncedName.current) {
+        if (currentQueue && currentQueue.modified !== lastAnnouncedModified.current) {
           announce(currentQueue);
         }
       }
@@ -109,12 +109,12 @@ export const useFarmasiAnnouncer = (currentQueue: FarmasiQueueTicket | null) => 
       console.error('Audio announcement failed:', err);
     }
     
-    lastAnnouncedName.current = queue.name;
+    lastAnnouncedModified.current = queue.modified;
   };
 
   useEffect(() => {
     // Only announce if sound is enabled and there is a new "Dipanggil" queue that we haven't announced yet
-    if (isSoundEnabled && currentQueue && currentQueue.name !== lastAnnouncedName.current) {
+    if (isSoundEnabled && currentQueue && currentQueue.modified !== lastAnnouncedModified.current) {
       announce(currentQueue);
     }
   }, [currentQueue, isSoundEnabled]);

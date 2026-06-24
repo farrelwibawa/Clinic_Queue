@@ -23,8 +23,10 @@ export const QueueDashboard = () => {
   const queues = state.context.queues;
 
   const { currentQueue, nextQueue, upcomingQueues } = useMemo(() => {
-    // Current queue: status "Dipanggil"
-    const current = queues.find((q) => q.status === 'Dipanggil') || null;
+    // Current queue: status "Dipanggil", picked by the latest modification
+    const current = queues
+      .filter((q) => q.status === 'Dipanggil')
+      .sort((a, b) => new Date(b.modified).getTime() - new Date(a.modified).getTime())[0] || null;
 
     // Menunggu queues
     const waiting = queues

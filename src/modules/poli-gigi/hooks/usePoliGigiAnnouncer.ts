@@ -3,7 +3,7 @@ import { PoliGigiQueueTicket } from '../types';
 
 export const usePoliGigiAnnouncer = (currentQueue: PoliGigiQueueTicket | null) => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
-  const lastAnnouncedName = useRef<string | null>(null);
+  const lastAnnouncedModified = useRef<string | null>(null);
 
   const playChime = async () => {
     const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
@@ -73,8 +73,9 @@ export const usePoliGigiAnnouncer = (currentQueue: PoliGigiQueueTicket | null) =
   };
 
   useEffect(() => {
-    if (currentQueue && currentQueue.name !== lastAnnouncedName.current) {
-      lastAnnouncedName.current = currentQueue.name;
+    // If we have a current queue, and it's different from the last one we announced
+    if (currentQueue && currentQueue.modified !== lastAnnouncedModified.current) {
+      lastAnnouncedModified.current = currentQueue.modified;
       announce(currentQueue);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

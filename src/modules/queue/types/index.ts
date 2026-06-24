@@ -3,7 +3,8 @@ export interface QueueTicket {
   queue_number: string;
   patient: string;
   destination_clinic: string;
-  status: string;
+  status: 'Menunggu' | 'Dipanggil' | 'Selesai';
+  modified: string;
 }
 
 export interface QueueResponse {

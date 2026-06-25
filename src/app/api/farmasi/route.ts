@@ -39,6 +39,17 @@ export async function GET() {
     }
 
     const data = await response.json();
+
+    if (data && data.data && Array.isArray(data.data)) {
+      data.data = data.data.map((item: any) => {
+        if (item.name) {
+          const parts = item.name.split('-');
+          item.queue_number = parts[parts.length - 1];
+        }
+        return item;
+      });
+    }
+
     return NextResponse.json(data);
 
   } catch (error) {

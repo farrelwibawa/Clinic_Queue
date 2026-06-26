@@ -1,4 +1,4 @@
-export interface PoliGigiQueueTicket {
+export interface SemuaPoliQueueTicket {
   name: string;
   queue_number: string;
   patient_name: string;
@@ -7,6 +7,6 @@ export interface PoliGigiQueueTicket {
   modified: string;
 }
 
-export interface PoliGigiQueueResponse {
-  data: PoliGigiQueueTicket[];
+export interface SemuaPoliQueueResponse {
+  data: SemuaPoliQueueTicket[];
 }

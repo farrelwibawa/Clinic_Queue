@@ -1,4 +1,4 @@
-export interface QueueTicket {
+export interface RegistrasiTicket {
   name: string;
   queue_number: string;
   patient: string;
@@ -7,6 +7,6 @@ export interface QueueTicket {
   modified: string;
 }
 
-export interface QueueResponse {
-  data: QueueTicket[];
+export interface RegistrasiResponse {
+  data: RegistrasiTicket[];
 }

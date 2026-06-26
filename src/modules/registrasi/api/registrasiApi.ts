@@ -1,8 +1,8 @@
-import { QueueTicket, QueueResponse } from '../types';
+import { RegistrasiTicket, RegistrasiResponse } from '../types';
 
-export const fetchQueues = async (): Promise<QueueTicket[]> => {
+export const fetchRegistrasi = async (): Promise<RegistrasiTicket[]> => {
   try {
-    const response = await fetch('/api/queue', {
+    const response = await fetch('/api/registrasi', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ export const fetchQueues = async (): Promise<QueueTicket[]> => {
       throw new Error(`Failed to fetch: ${response.status} - ${errorText}`);
     }
 
-    const json = await response.json() as QueueResponse;
+    const json = await response.json() as RegistrasiResponse;
     return json.data || [];
   } catch (error) {
     console.error('Error fetching queues:', error);

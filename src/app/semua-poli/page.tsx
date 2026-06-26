@@ -1,9 +1,9 @@
-import { PoliGigiDashboard } from '@/modules/poli-gigi/components/PoliGigiDashboard';
+import { SemuaPoliDashboard } from '@/modules/semua-poli/components/SemuaPoliDashboard';
 
-export default function PoliGigiQueuePage() {
+export default function SemuaPoliQueuePage() {
   return (
     <main>
-      <PoliGigiDashboard />
+      <SemuaPoliDashboard />
     </main>
   );
 }

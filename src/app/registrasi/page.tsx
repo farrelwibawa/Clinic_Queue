@@ -1,9 +1,9 @@
-import { QueueDashboard } from '@/modules/queue/components/QueueDashboard';
+import { RegistrasiDashboard } from '@/modules/registrasi/components/RegistrasiDashboard';
 
-export default function RegistrasiQueuePage() {
+export default function RegistrasiPage() {
   return (
     <main>
-      <QueueDashboard />
+      <RegistrasiDashboard />
     </main>
   );
 }

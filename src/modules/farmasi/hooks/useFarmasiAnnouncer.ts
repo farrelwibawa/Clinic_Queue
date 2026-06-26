@@ -39,7 +39,7 @@ export const useFarmasiAnnouncer = (currentQueue: FarmasiQueueTicket | null) => 
           // Space out consecutive letters so they are spelled out (e.g. "AB" -> "A B")
           pronouncedQueueNumber = pronouncedQueueNumber.replace(/([a-zA-Z])(?=[a-zA-Z])/g, '$1 ');
           
-          const text = `Antrian nomor, ${pronouncedQueueNumber}. Atas nama, ${queue.patient_name}. Silakan menuju ke, ${queue.handed_counter || 'Loket Farmasi'}.`;
+          const text = `Antrian nomor, ${pronouncedQueueNumber}. Atas nama, ${queue.patient_name}. Silakan menuju ke, Loket Farmasi.`;
           
           const utterance = new SpeechSynthesisUtterance(text);
           utterance.lang = 'id-ID';

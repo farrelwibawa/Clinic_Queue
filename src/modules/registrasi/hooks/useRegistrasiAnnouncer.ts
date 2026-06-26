@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { QueueTicket } from '../types';
+import { RegistrasiTicket } from '../types';
 import { playChime, unlockAudioAndSpeech } from '../../shared/utils/audio';
 
-export const useQueueAnnouncer = (currentQueue: QueueTicket | null) => {
+export const useRegistrasiAnnouncer = (currentQueue: RegistrasiTicket | null) => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const lastAnnouncedModified = useRef<string | null>(null);
 
-  const announce = async (queue: QueueTicket) => {
+  const announce = async (queue: RegistrasiTicket) => {
     if (!isSoundEnabled) return;
     
     try {

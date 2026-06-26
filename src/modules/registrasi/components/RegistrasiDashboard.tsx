@@ -4,14 +4,14 @@ import React, { useEffect, useMemo } from 'react';
 import { useMachine } from '@xstate/react';
 import { Users, Volume2, VolumeX, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { queueMachine } from '../machines/queueMachine';
-import { useQueueAnnouncer } from '../hooks/useQueueAnnouncer';
+import { registrasiMachine } from '../machines/registrasiMachine';
+import { useRegistrasiAnnouncer } from '../hooks/useRegistrasiAnnouncer';
 import { HeaderClock } from '../../shared/components/HeaderClock';
 import { QueueCard } from '../../shared/components/QueueCard';
 import { QueueTable } from '../../shared/components/QueueTable';
 
-export const QueueDashboard = () => {
-  const [state, send] = useMachine(queueMachine);
+export const RegistrasiDashboard = () => {
+  const [state, send] = useMachine(registrasiMachine);
 
   // Send initial FETCH event on mount if idle
   useEffect(() => {
@@ -47,7 +47,7 @@ export const QueueDashboard = () => {
     };
   }, [queues]);
 
-  const { isSoundEnabled, toggleSound } = useQueueAnnouncer(currentQueue);
+  const { isSoundEnabled, toggleSound } = useRegistrasiAnnouncer(currentQueue);
 
   return (
     <div className="h-screen bg-slate-50 p-4 lg:p-6 flex flex-col font-sans relative overflow-hidden">

@@ -1,11 +1,11 @@
 import { setup, assign, fromPromise } from 'xstate';
-import { fetchPoliGigiQueues } from '../api/poliGigiApi';
-import { PoliGigiQueueTicket } from '../types';
+import { fetchSemuaPoliQueues } from '../api/semuaPoliApi';
+import { SemuaPoliQueueTicket } from '../types';
 
-export const poliGigiMachine = setup({
+export const SemuaPoliMachine = setup({
   types: {
     context: {} as {
-      queues: PoliGigiQueueTicket[];
+      queues: SemuaPoliQueueTicket[];
       error: string | null;
       lastFetched: Date | null;
     },
@@ -15,11 +15,11 @@ export const poliGigiMachine = setup({
   },
   actors: {
     fetchData: fromPromise(async () => {
-      return await fetchPoliGigiQueues();
+      return await fetchSemuaPoliQueues();
     }),
   },
 }).createMachine({
-  id: 'poliGigi',
+  id: 'SemuaPoli',
   initial: 'idle',
   context: {
     queues: [],

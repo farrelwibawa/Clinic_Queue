@@ -98,6 +98,7 @@ export const FarmasiDashboard = () => {
             queueNumber={currentQueue?.queue_number || null}
             patientName={currentQueue?.patient_name || null}
             destinationName={currentQueue?.handed_counter || null}
+            destinationLabel="Poli Asal"
           />
           <QueueCard
             variant="next"
@@ -107,6 +108,7 @@ export const FarmasiDashboard = () => {
             queueNumber={nextQueue?.queue_number || null}
             patientName={nextQueue?.patient_name || null}
             destinationName={nextQueue?.handed_counter || null}
+            destinationLabel="Poli Asal"
           />
         </div>
 
@@ -121,6 +123,7 @@ export const FarmasiDashboard = () => {
               patientName: q.patient_name,
               destinationName: q.handed_counter
             }))}
+            destinationLabel="Poli Asal"
           />
         </div>
       </main>

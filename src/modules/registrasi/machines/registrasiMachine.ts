@@ -1,11 +1,11 @@
 import { setup, assign, fromPromise } from 'xstate';
-import { fetchQueues } from '../api/queueApi';
-import { QueueTicket } from '../types';
+import { fetchRegistrasi } from '../api/registrasiApi';
+import { RegistrasiTicket } from '../types';
 
-export const queueMachine = setup({
+export const registrasiMachine = setup({
   types: {
     context: {} as {
-      queues: QueueTicket[];
+      queues: RegistrasiTicket[];
       error: string | null;
       lastFetched: Date | null;
     },
@@ -15,7 +15,7 @@ export const queueMachine = setup({
   },
   actors: {
     fetchData: fromPromise(async () => {
-      return await fetchQueues();
+      return await fetchRegistrasi();
     }),
   },
 }).createMachine({

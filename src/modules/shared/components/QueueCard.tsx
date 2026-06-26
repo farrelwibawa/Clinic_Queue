@@ -12,6 +12,7 @@ interface QueueCardProps {
   queueNumber: string | null;
   patientName: string | null;
   destinationName: string | null;
+  destinationLabel?: string;
 }
 
 const themeStyles = {
@@ -57,6 +58,7 @@ export const QueueCard: React.FC<QueueCardProps> = ({
   queueNumber,
   patientName,
   destinationName,
+  destinationLabel,
 }) => {
   const styles = themeStyles[theme];
 
@@ -100,7 +102,7 @@ export const QueueCard: React.FC<QueueCardProps> = ({
                 <Activity className={`w-5 h-5 ${styles.textDark}`} />
               </div>
               <div className="grid grid-cols-[140px_10px_1fr] flex-1 text-gray-700 items-center">
-                <span className="font-medium">Destinasi Poli</span>
+                <span className="font-medium">{destinationLabel || 'Destinasi Poli'}</span>
                 <span>:</span>
                 <span className="font-bold text-gray-900">{destinationName || '-'}</span>
               </div>

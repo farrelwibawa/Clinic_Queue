@@ -4,14 +4,14 @@ import React, { useEffect, useMemo } from 'react';
 import { useMachine } from '@xstate/react';
 import { Volume2, VolumeX, ArrowLeft, Stethoscope } from 'lucide-react';
 import Link from 'next/link';
-import { poliGigiMachine } from '../machines/poliGigiMachine';
-import { usePoliGigiAnnouncer } from '../hooks/usePoliGigiAnnouncer';
+import { SemuaPoliMachine } from '../machines/semuaPoliMachine';
+import { useSemuaPoliAnnouncer } from '../hooks/useSemuaPoliAnnouncer';
 import { HeaderClock } from '../../shared/components/HeaderClock';
 import { QueueCard } from '../../shared/components/QueueCard';
 import { QueueTable } from '../../shared/components/QueueTable';
 
-export const PoliGigiDashboard = () => {
-  const [state, send] = useMachine(poliGigiMachine);
+export const SemuaPoliDashboard = () => {
+  const [state, send] = useMachine(SemuaPoliMachine);
 
   useEffect(() => {
     if (state.matches('idle')) {
@@ -42,7 +42,7 @@ export const PoliGigiDashboard = () => {
     };
   }, [queues]);
 
-  const { isSoundEnabled, toggleSound } = usePoliGigiAnnouncer(currentQueue);
+  const { isSoundEnabled, toggleSound } = useSemuaPoliAnnouncer(currentQueue);
 
   return (
     <div className="h-screen bg-slate-50 p-4 lg:p-6 flex flex-col font-sans relative overflow-hidden">

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { PoliGigiQueueTicket } from '../types';
+import { SemuaPoliQueueTicket } from '../types';
 import { playChime, unlockAudioAndSpeech } from '../../shared/utils/audio';
 
-export const usePoliGigiAnnouncer = (currentQueue: PoliGigiQueueTicket | null) => {
+export const useSemuaPoliAnnouncer = (currentQueue: SemuaPoliQueueTicket | null) => {
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const lastAnnouncedModified = useRef<string | null>(null);
 
-  const announce = async (queue: PoliGigiQueueTicket) => {
+  const announce = async (queue: SemuaPoliQueueTicket) => {
     if (!isSoundEnabled) return;
     
     try {

@@ -13,6 +13,7 @@ interface QueueTableProps {
   theme: Extract<QueueCardTheme, 'green' | 'teal' | 'blue'>; // Currently only green, teal, blue
   title: string;
   queues: QueueTableData[];
+  destinationLabel?: string;
 }
 
 const themeStyles = {
@@ -45,7 +46,7 @@ const themeStyles = {
   },
 };
 
-export const QueueTable: React.FC<QueueTableProps> = ({ theme, title, queues }) => {
+export const QueueTable: React.FC<QueueTableProps> = ({ theme, title, queues, destinationLabel }) => {
   const styles = themeStyles[theme];
 
   return (
@@ -63,7 +64,7 @@ export const QueueTable: React.FC<QueueTableProps> = ({ theme, title, queues }) 
             <tr className={`${styles.thBg} text-white`}>
               <th className="py-3 px-4 font-semibold text-sm uppercase tracking-wider rounded-tl-xl rounded-bl-xl w-1/4">Nomor Antrian</th>
               <th className="py-3 px-4 font-semibold text-sm uppercase tracking-wider w-1/2">Nama Pasien</th>
-              <th className="py-3 px-4 font-semibold text-sm uppercase tracking-wider rounded-tr-xl rounded-br-xl w-1/4">Destinasi Poli</th>
+              <th className="py-3 px-4 font-semibold text-sm uppercase tracking-wider rounded-tr-xl rounded-br-xl w-1/4">{destinationLabel || 'Destinasi Poli'}</th>
             </tr>
           </thead>
           <tbody>

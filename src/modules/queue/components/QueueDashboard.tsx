@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo } from 'react';
 import { useMachine } from '@xstate/react';
-import { Activity, Volume2, VolumeX, ArrowLeft } from 'lucide-react';
+import { Users, Volume2, VolumeX, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { queueMachine } from '../machines/queueMachine';
 import { useQueueAnnouncer } from '../hooks/useQueueAnnouncer';
@@ -59,7 +59,7 @@ export const QueueDashboard = () => {
       <header className="relative z-10 flex justify-between items-center mb-4 lg:mb-6">
         <div className="flex items-center space-x-4">
           <div className="bg-green-600 p-3 rounded-2xl shadow-lg shadow-green-200">
-            <Activity className="w-10 h-10 text-white" />
+            <Users className="w-10 h-10 text-white" />
           </div>
           <div>
             <h1 className="text-3xl font-bold text-gray-800 tracking-tight">
@@ -99,7 +99,7 @@ export const QueueDashboard = () => {
             variant="current"
             theme="green"
             title="ANTRIAN REGISTRASI"
-            icon={Activity}
+            icon={Users}
             queueNumber={currentQueue?.queue_number || null}
             patientName={currentQueue?.patient || null}
             destinationName={currentQueue?.destination_clinic || null}
@@ -108,7 +108,7 @@ export const QueueDashboard = () => {
             variant="next"
             theme="blue"
             title="ANTRIAN SELANJUTNYA"
-            icon={Activity}
+            icon={Users}
             queueNumber={nextQueue?.queue_number || null}
             patientName={nextQueue?.patient || null}
             destinationName={nextQueue?.destination_clinic || null}

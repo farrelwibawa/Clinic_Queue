@@ -12,7 +12,7 @@ export default function LandingPage() {
       <div className="z-10 mb-12 text-center">
         <div className="flex items-center justify-center space-x-3 mb-4">
           <div className="bg-green-600 p-3 rounded-2xl shadow-lg shadow-green-600/30">
-            <Activity className="w-10 h-10 text-white" />
+            <Users className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-4xl font-extrabold text-green-800 tracking-tight">Klinik SatuSehat</h1>
         </div>
